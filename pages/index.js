@@ -3,37 +3,40 @@ import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
 
-const ViewerQuery = gql`
-  query ViewerQuery {
-    viewer {
-      id
-      name
-      status
-    }
+const query = gql`
+  query Query {
+    hello
   }
 `
 
 const Index = () => {
   const {
-    data: { viewer },
-  } = useQuery(ViewerQuery)
+    loading,
+    error,
+    data
+  } = useQuery(query);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    console.log('error: ', error)
+    return <p>Error :(</p>;
+  }
 
   return (
-    <div>
-      You're signed in as {viewer.name} and you're {viewer.status} goto{' '}
-      <Link href="/about">
-        <a>static</a>
-      </Link>{' '}
-      page.
+    <div className="App">
+      <header className="App-header">
+        <h1>{data.hello}</h1>
+        {/*<h1>{userData.user}</h1>*/}
+      </header>
     </div>
-  )
+  );
 }
 
 export async function getStaticProps() {
   const apolloClient = initializeApollo()
 
   await apolloClient.query({
-    query: ViewerQuery,
+    query: query,
   })
 
   return {

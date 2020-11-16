@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
+const endpoint = 'https://ri5r5u9r7b.execute-api.us-east-1.amazonaws.com/dev';
 let apolloClient
 
 function createIsomorphLink() {
@@ -11,7 +12,7 @@ function createIsomorphLink() {
   } else {
     const { HttpLink } = require('@apollo/client/link/http')
     return new HttpLink({
-      uri: '/api/graphql',
+      uri: endpoint + '/graphql',
       credentials: 'same-origin',
     })
   }
