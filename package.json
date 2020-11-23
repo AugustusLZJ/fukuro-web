@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.0.2",
+    "@aws-amplify/ui-react": "^0.2.29",
     "apollo-server-micro": "^2.14.2",
+    "aws-amplify": "^3.3.9",
     "graphql": "^14.0.2",
     "next": "latest",
     "prop-types": "^15.6.2",

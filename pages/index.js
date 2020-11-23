@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
+import { withAuthenticator} from '@aws-amplify/ui-react';
 
 const query = gql`
   query Query {
@@ -46,4 +47,4 @@ export async function getStaticProps() {
   }
 }
 
-export default Index
+export default withAuthenticator(Index)

@@ -1,8 +1,18 @@
 import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client'
 
-const endpoint = 'https://ri5r5u9r7b.execute-api.us-east-1.amazonaws.com/dev';
+import { setContext } from '@apollo/client/link/context';
+import Amplify, { Auth } from 'aws-amplify'
+import config from "../src/aws-exports";
+
+const { endpoint } = config.aws_cloud_logic_custom[0];
 let apolloClient
+
+Amplify.configure(config);
 
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
@@ -17,6 +27,24 @@ function createIsomorphLink() {
     })
   }
 }
+
+const httpLink = createHttpLink({
+  uri: endpoint + '/graphql',
+  credentials: 'same-origin',
+});
+
+const authLink = setContext((request) => new Promise( (resolve, reject) => {
+  Auth.currentSession()
+    .then(session => {
+      const token = session.getIdToken().getJwtToken();
+      // console.log(token);
+      resolve({
+        headers: { Authorization: token }
+      });
+    }, err => {
+      console.log("Failed to get auth session: " + err);
+    })
+}));
 
 function createApolloClient() {
   return new ApolloClient({
