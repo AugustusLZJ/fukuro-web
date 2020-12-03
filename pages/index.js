@@ -2,7 +2,8 @@ import gql from 'graphql-tag'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
-import { withAuthenticator} from '@aws-amplify/ui-react';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import { Auth } from "aws-amplify";
 
 const query = gql`
   query Query {
@@ -12,6 +13,7 @@ const query = gql`
 
 const Index = () => {
   const {
+    client,
     loading,
     error,
     data
@@ -33,12 +35,25 @@ const Index = () => {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  console.log("index.js: getStaticProps")
   const apolloClient = initializeApollo()
 
-  await apolloClient.query({
-    query: query,
-  })
+  try {
+    await apolloClient.query({
+      query: query,
+    })
+    console.log("Cache:")
+    console.log(apolloClient.cache.data.data)
+
+  } catch (err) {
+    console.error(`error: ${err}`)
+    return {
+      props: {
+        initialApolloState: apolloClient.cache.extract(),
+      },
+    }
+  }
 
   return {
     props: {

@@ -5,14 +5,12 @@ import {
   InMemoryCache,
 } from '@apollo/client'
 
-import { setContext } from '@apollo/client/link/context';
-import Amplify, { Auth } from 'aws-amplify'
-import config from "../src/aws-exports";
+import { setContext } from '@apollo/client/link/context'
+import { Auth } from 'aws-amplify'
+import config from "../src/aws-exports"
 
 const { endpoint } = config.aws_cloud_logic_custom[0];
 let apolloClient
-
-Amplify.configure(config);
 
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
@@ -36,20 +34,22 @@ const httpLink = createHttpLink({
 const authLink = setContext((request) => new Promise( (resolve, reject) => {
   Auth.currentSession()
     .then(session => {
-      const token = session.getIdToken().getJwtToken();
-      // console.log(token);
+      console.log("Got auth session")
+      const token = session.getIdToken().getJwtToken()
+      console.log(token)
       resolve({
         headers: { Authorization: token }
       });
     }, err => {
-      console.log("Failed to get auth session: " + err);
+      console.log("Failed to get auth session: " + err)
+      resolve({})
     })
 }));
 
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: createIsomorphLink(),
+    link: authLink.concat(createIsomorphLink()),
     cache: new InMemoryCache(),
   })
 }
