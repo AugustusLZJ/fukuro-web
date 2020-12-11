@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../apollo/client'
 import Amplify, {Auth} from "aws-amplify";
 import config from "../src/aws-exports";
+import Layout from "../components/Layout";
 
 Amplify.configure({
   ...config,
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ApolloProvider>
   )
 }

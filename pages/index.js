@@ -19,10 +19,10 @@ const Index = () => {
     data
   } = useQuery(query);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>
   if (error) {
     console.log('error: ', error)
-    return <p>Error :(</p>;
+    return <p>Error :(</p>
   }
 
   return (
@@ -32,7 +32,7 @@ const Index = () => {
         {/*<h1>{userData.user}</h1>*/}
       </header>
     </div>
-  );
+  )
 }
 
 export async function getStaticProps(context) {
