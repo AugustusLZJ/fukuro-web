@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import {useRouter} from "next/router";
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -79,16 +81,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
+  const { withSearch } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const router = useRouter()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    router.push('/profile')
   };
 
   const handleMobileMenuClose = () => {
@@ -171,12 +176,14 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            <Link href="./" >
+              <MenuIcon />
+            </Link>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Material-UI
           </Typography>
-          <div className={classes.search}>
+          <div className={classes.search} hidden={!withSearch}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -193,7 +200,9 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <Link href='./inbox'>
+                  <MailIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">

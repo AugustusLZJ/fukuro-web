@@ -2,7 +2,7 @@ import Navbar from "./Navbar"
 
 const Layout = props => (
   <>
-    <Navbar />
+    <Navbar withSearch={props.withSearch} />
     {props.children}
   </>
 )

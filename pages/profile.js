@@ -21,4 +21,7 @@ function Profile() {
   )
 }
 
-export default withAuthenticator(Profile)
+const ProfileWithAuth = withAuthenticator(Profile)
+ProfileWithAuth.withSearch = false
+
+export default ProfileWithAuth

@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import { Auth } from "aws-amplify";
+import getLayout from "../components/Layout";
 
 const query = gql`
   query Query {
@@ -11,7 +13,7 @@ const query = gql`
   }
 `
 
-const Index = () => {
+const Index = ({setSearchable}) => {
   const {
     client,
     loading,
@@ -62,4 +64,6 @@ export async function getStaticProps(context) {
   }
 }
 
-export default withAuthenticator(Index)
+Index.withSearch = true;
+
+export default Index

@@ -11,10 +11,11 @@ Amplify.configure({
 
 export default function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState)
+  console.log(Component.withSearch)
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Layout>
+      <Layout withSearch={Component.withSearch}>
         <Component {...pageProps} />
       </Layout>
     </ApolloProvider>
