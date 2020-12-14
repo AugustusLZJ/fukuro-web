@@ -13,5 +13,8 @@ const Inbox = () => {
 }
 
 Inbox.withSearch = true
+Inbox.searchFunc = (keyword) => {
+  console.log(`Inbox: ${keyword}`)
+}
 
 export default Inbox

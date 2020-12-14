@@ -6,6 +6,7 @@ import { initializeApollo } from '../apollo/client'
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import { Auth } from "aws-amplify";
 import getLayout from "../components/Layout";
+import Inbox from "./inbox";
 
 const query = gql`
   query Query {
@@ -65,5 +66,8 @@ export async function getStaticProps(context) {
 }
 
 Index.withSearch = true;
+Index.searchFunc = (keyword) => {
+  console.log(`Homepage: ${keyword}`)
+}
 
 export default Index

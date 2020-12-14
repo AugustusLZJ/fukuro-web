@@ -15,9 +15,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Layout withSearch={Component.withSearch}>
-        <Component {...pageProps} />
-      </Layout>
+      <Layout Component={Component} pageProps={pageProps} />
     </ApolloProvider>
   )
 }
