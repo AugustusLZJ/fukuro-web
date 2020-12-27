@@ -29,7 +29,7 @@ function createIsomorphLink() {
 const httpLink = createHttpLink({
   uri: endpoint + '/graphql',
   credentials: 'same-origin',
-});
+})
 
 const authLink = setContext((request) => new Promise( (resolve, reject) => {
   Auth.currentSession()
@@ -39,12 +39,12 @@ const authLink = setContext((request) => new Promise( (resolve, reject) => {
       console.log(token)
       resolve({
         headers: { Authorization: token }
-      });
+      })
     }, err => {
       console.log("Failed to get auth session: " + err)
       resolve({})
     })
-}));
+}))
 
 function createApolloClient() {
   return new ApolloClient({

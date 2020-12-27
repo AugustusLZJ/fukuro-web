@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@material-ui/styles'
-import theme from "../src/theme";
-import Navbar from "./Navbar"
+import theme from "../src/theme"
+import Navbar from "./navbar"
 
 const Layout = ({ Component, pageProps }) => (
   <ThemeProvider theme={theme}>

@@ -4,9 +4,10 @@ import { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
-import { Auth } from "aws-amplify";
-import getLayout from "../components/Layout";
-import Inbox from "./inbox";
+import { Auth } from "aws-amplify"
+import getLayout from "../components/layout"
+import Inbox from "./inbox"
+import pageWrapper from "./api/page-wrapper"
 
 const query = gql`
   query Query {
@@ -65,9 +66,10 @@ export async function getStaticProps(context) {
   }
 }
 
-Index.withSearch = true;
-Index.searchFunc = (keyword) => {
-  console.log(`Homepage: ${keyword}`)
-}
-
-export default Index
+export default pageWrapper(Index, {
+  withAuth: true,
+  withSearch: true,
+  searchFunc: (keyword) => {
+    console.log(`Homepage: ${keyword}`)
+  }
+})

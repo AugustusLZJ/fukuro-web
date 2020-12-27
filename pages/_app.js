@@ -1,8 +1,8 @@
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../apollo/client'
-import Amplify, {Auth} from "aws-amplify";
-import config from "../src/aws-exports";
-import Layout from "../components/Layout";
+import Amplify, {Auth} from "aws-amplify"
+import config from "../src/aws-exports"
+import Layout from "../components/layout"
 
 Amplify.configure({
   ...config,

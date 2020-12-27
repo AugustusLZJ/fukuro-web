@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Auth } from 'aws-amplify'
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import pageWrapper from "./api/page-wrapper"
 
 function Profile() {
   const [user, setUser] = useState(null)
@@ -21,7 +22,7 @@ function Profile() {
   )
 }
 
-const ProfileWithAuth = withAuthenticator(Profile)
-ProfileWithAuth.withSearch = false
-
-export default ProfileWithAuth
+export default pageWrapper(Profile, {
+  withAuth: true,
+  withSearch: false
+})

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import pageWrapper from "./api/page-wrapper"
 
 const Inbox = () => {
   return (
@@ -12,9 +13,10 @@ const Inbox = () => {
   )
 }
 
-Inbox.withSearch = true
-Inbox.searchFunc = (keyword) => {
-  console.log(`Inbox: ${keyword}`)
-}
-
-export default Inbox
+export default pageWrapper(Inbox, {
+  withAuth: true,
+  withSearch: true,
+  searchFunc: (keyword) => {
+    console.log(`Inbox: ${keyword}`)
+  }
+})
